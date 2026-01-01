@@ -39,15 +39,15 @@ export default function MonumentsScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 16,
+    flex: 5,
+    padding: 15,
   },
   title: {
     textAlign: 'center',
     marginBottom: 16,
   },
   list: {
-    flex: 1,
+    flex: 2,
   },
   monumentItem: {
     padding: 16,

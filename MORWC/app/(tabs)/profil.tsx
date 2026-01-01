@@ -1,6 +1,6 @@
+import { useLanguage } from "@/context";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { useLanguage } from "@/context";
 
 export default function ProfilScreen() {
   const { openLanguageModal } = useLanguage();
@@ -18,7 +18,7 @@ export default function ProfilScreen() {
         <View style={styles.avatar}>
           <Text style={styles.avatarText}>👤</Text>
         </View>
-        <Text style={styles.name}>ibti hale meftah</Text>
+        <Text style={styles.name}> user name </Text>
       </Animated.View>
 
       <View style={styles.list}>
@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  logoutText: { flex: 1, fontSize: 15, fontWeight: "700", color: "#7A1F16" },
-  chevronWhite: { fontSize: 22, color: "#7A1F16" },
+  logoutText: { flex: 1, fontSize: 15, fontWeight: "700", color: "#af2a2aff" },
+  chevronWhite: { fontSize: 22, color: "#b01313ff" },
 });
