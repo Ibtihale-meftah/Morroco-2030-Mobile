@@ -1,24 +1,66 @@
 import { useLanguage } from "@/context";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
+import { auth } from "../../src/firebase/firebase";
+
+const avatars = [
+  require("../../assets/images/avatars/7309681.jpg"),
+  require("../../assets/images/avatars/54b19ada-d53e-4ee9-8882-9dfed1bf1396.jpg"),
+  require("../../assets/images/avatars/9440461.jpg"),
+  require("../../assets/images/avatars/7450220.jpg"),
+];
 
 export default function ProfilScreen() {
   const { openLanguageModal } = useLanguage();
+  const user = auth.currentUser;
+
+  const [avatarIndex, setAvatarIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const loadAvatar = async () => {
+      const saved = await AsyncStorage.getItem("avatarIndex");
+      if (saved !== null) setAvatarIndex(Number(saved));
+    };
+    loadAvatar();
+  }, []);
+
+  const selectAvatar = async () => {
+    const next = avatarIndex === null ? 0 : (avatarIndex + 1) % avatars.length;
+    setAvatarIndex(next);
+    await AsyncStorage.setItem("avatarIndex", next.toString());
+  };
 
   const items = [
-    { label: "Modifier mon profil", onPress: () => {} },
-    { label: "Modifier mon mot de passe", onPress: () => {} },
+    { label: "Modifier mon profil", onPress: () => router.push("../edit-profile") },
+    { label: "Modifier mon mot de passe", onPress: () => router.push("../reset-password") },
     { label: "Sélectionner la langue", onPress: openLanguageModal },
-    { label: "Supprimer mon compte", onPress: () => {} },
+    { label: "Supprimer mon compte", onPress: () => router.push("../delete-account") },
   ];
 
   return (
     <View style={styles.container}>
       <Animated.View entering={FadeInDown.duration(500)} style={styles.avatarWrap}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>👤</Text>
-        </View>
-        <Text style={styles.name}> user name </Text>
+        <TouchableOpacity onPress={selectAvatar}>
+          <View style={styles.avatar}>
+            {avatarIndex !== null ? (
+              <Image source={avatars[avatarIndex]} style={styles.avatarImg} />
+            ) : (
+              <Text style={styles.avatarText}>👤</Text>
+            )}
+          </View>
+        </TouchableOpacity>
+
+        <Text style={styles.name}>{user?.email}</Text>
+        <Text style={styles.sub}>Appuie sur l’avatar pour changer</Text>
       </Animated.View>
 
       <View style={styles.list}>
@@ -30,7 +72,7 @@ export default function ProfilScreen() {
         ))}
       </View>
 
-      <TouchableOpacity style={styles.logout} onPress={() => {}}>
+      <TouchableOpacity style={styles.logout} onPress={() => router.push("/logout")}>
         <Text style={styles.logoutText}>Déconnexion</Text>
         <Text style={styles.chevronWhite}>›</Text>
       </TouchableOpacity>
@@ -51,8 +93,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
+  avatarImg: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+  },
   avatarText: { fontSize: 38 },
   name: { fontSize: 18, fontWeight: "700" },
+  sub: { fontSize: 12, color: "#555" },
   list: { gap: 10 },
   item: {
     paddingVertical: 16,

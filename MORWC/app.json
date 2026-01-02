@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "MORWC",
-    "slug": "MORWC",
+    "name": "MoroccoGo 2030",
+    "slug": "MoroccoGo2030",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/image.png",
-    "scheme": "morwc",
+    "icon": "./assets/images/logo 2.png",
+    "scheme": "morocogogo2030",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

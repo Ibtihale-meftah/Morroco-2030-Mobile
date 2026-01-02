@@ -16,18 +16,12 @@ export default function ServicesScreen() {
         </Animated.View>
 
         <Animated.View entering={FadeInUp.delay(80).duration(450)}>
-          <TouchableOpacity style={styles.card} onPress={() => router.push("/explore")}>
+          <TouchableOpacity style={styles.card} onPress={() => router.push("/monuments")}>
             <Text style={styles.icon}>🏛️</Text>
             <Text style={styles.label}>Monuments</Text>
           </TouchableOpacity>
         </Animated.View>
 
-        <Animated.View entering={FadeInUp.delay(160).duration(450)}>
-          <TouchableOpacity style={styles.card} onPress={() => router.push("/itinerary")}>
-            <Text style={styles.icon}>🗺️</Text>
-            <Text style={styles.label}>Itinerary</Text>
-          </TouchableOpacity>
-        </Animated.View>
 
         <Animated.View entering={FadeInUp.delay(240).duration(450)}>
           <TouchableOpacity style={styles.card} onPress={() => router.push("/map")}>

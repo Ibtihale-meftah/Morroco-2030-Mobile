@@ -1,14 +1,12 @@
-import { LanguageProvider, useLanguage } from "@/context";
-import { Stack } from "expo-router";
+import { useLanguage } from "@/context";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import LanguageModal from "./modal";
 
 function AppHeader() {
   const { lang, openLanguageModal } = useLanguage();
 
   return (
     <View style={styles.header}>
-      <Text style={styles.logo}>MOROCCO 2030</Text>
+      <Text style={styles.logo}>MOROCCOGo 2030</Text>
 
       <View style={styles.right}>
         <TouchableOpacity onPress={openLanguageModal} style={styles.langBtn}>
@@ -17,27 +15,12 @@ function AppHeader() {
           </Text>
           <Text style={styles.langArrow}>▾</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.bellBtn} onPress={() => {}}>
-          <Text style={styles.bell}>🔔</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-export default function RootLayout() {
-  return (
-    <LanguageProvider>
-      <Stack
-        screenOptions={{
-          header: () => <AppHeader />,
-        }}
-      />
-      <LanguageModal />
-    </LanguageProvider>
-  );
-}
+
 
 const styles = StyleSheet.create({
   header: {

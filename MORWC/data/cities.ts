@@ -7,6 +7,7 @@ export interface City {
   climate: string;
   languages: string[];
   tips: string[];
+  isHostCity: true | false;
   image?: string;
 }
 
@@ -28,6 +29,7 @@ export const cities: City[] = [
       "Utilisez le tramway pour vous déplacer facilement",
       "Prévoyez une veste légère le soir, même en été",
     ],
+     isHostCity: true,
     image: "https://sl.bing.net/fAt4oUtUT48",
   },
   {
@@ -47,6 +49,7 @@ export const cities: City[] = [
       "Profitez de la corniche et de la marina pour une pause",
       "Utilisez le tramway pour relier Rabat et Salé rapidement",
     ],
+     isHostCity: true,
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/Rabat_Kasbah_Oudayas_%282%29.jpg",
   },
   {
@@ -66,6 +69,7 @@ export const cities: City[] = [
       "Prévoyez de l’eau, un chapeau et de la crème solaire en été",
       "Choisissez un guide officiel si vous voulez une visite historique détaillée",
     ],
+     isHostCity: true,
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/Jemaa_el-Fnaa_at_night_-_Maroco_-_Marrakesh.jpg",
   },
   {
@@ -85,6 +89,7 @@ export const cities: City[] = [
       "Faites une sortie aux Grottes d’Hercule tôt pour éviter les groupes",
       "Prévoyez un coupe-vent, surtout en bord de mer",
     ],
+     isHostCity: true,
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/Cap_Spartel%2C_Tangier%2C_Morocco_-_panoramio.jpg",
   },
   {
@@ -104,6 +109,7 @@ export const cities: City[] = [
       "Montez vers Agadir Oufella pour la vue panoramique",
       "Goûtez les plats de poisson dans les restaurants du front de mer",
     ],
+     isHostCity: true,
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/Agadir_beach%2C_Morocco.JPG",
   },
   {
@@ -123,6 +129,7 @@ export const cities: City[] = [
       "Portez des chaussures confortables, vous allez beaucoup marcher",
       "Prévoyez un pull en hiver, surtout le matin et le soir",
     ],
+     isHostCity: true,
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/Fez_Chouara_Tannery_%2854237913722%29.jpg",
   },
 ];

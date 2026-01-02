@@ -36,7 +36,9 @@ export default function HomeTab() {
           <Animated.View entering={FadeInUp.delay(150).duration(500)}>
             <TouchableOpacity style={styles.bigCard} onPress={() => {}}>
               <Text style={styles.bigCardIcon}>🔐</Text>
-              <Text style={styles.bigCardText}>Se connecter</Text>
+              <TouchableOpacity onPress={() => router.push("/login")}>
+  <Text>Se connecter</Text>
+</TouchableOpacity>
               <Text style={styles.bigCardArrow}>↗</Text>
             </TouchableOpacity>
           </Animated.View>
@@ -44,7 +46,9 @@ export default function HomeTab() {
           <Animated.View entering={FadeInUp.delay(250).duration(500)}>
             <TouchableOpacity style={styles.bigCard} onPress={() => {}}>
               <Text style={styles.bigCardIcon}>📖</Text>
-              <Text style={styles.bigCardText}> Créer un conte </Text>
+            <TouchableOpacity onPress={() => router.push("/register")}>
+  <Text>Créer un compte</Text>
+</TouchableOpacity>
               <Text style={styles.bigCardArrow}>↗</Text>
             </TouchableOpacity>
           </Animated.View>

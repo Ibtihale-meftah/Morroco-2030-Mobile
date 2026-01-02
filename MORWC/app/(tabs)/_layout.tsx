@@ -9,10 +9,25 @@ export default function TabsLayout() {
         tabBarStyle: { height: 62 },
       }}
     >
-      <Tabs.Screen name="index" options={{ title: "Accueil" }} />
-      <Tabs.Screen name="services" options={{ title: "Services" }} />
-      <Tabs.Screen name="explore" options={{ title: "monuments" }} />
-      <Tabs.Screen name="profil" options={{ title: "Profil" }} />
+      <Tabs.Screen
+        name="index"
+        options={{ title: "Accueil" }}
+      />
+
+      <Tabs.Screen
+        name="services"
+        options={{ title: "Services" }}
+      />
+
+      <Tabs.Screen
+        name="explore"
+        options={{ title: "Monuments" }}
+      />
+
+      <Tabs.Screen
+        name="profil"
+        options={{ title: "Profil" }}
+      />
     </Tabs>
   );
 }

@@ -1,7 +1,7 @@
-import { FlatList, Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { router } from "expo-router";
-import { cities } from "@/data/cities";
 import { ThemedText } from "@/components/themed-text";
+import { cities } from "@/data/cities";
+import { router } from "expo-router";
+import { FlatList, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function CitiesScreen() {
   return (
@@ -24,7 +24,7 @@ export default function CitiesScreen() {
 
 const styles = StyleSheet.create({
   container: { padding: 16, paddingBottom: 24 },
-  card: { borderRadius: 16, overflow: "hidden", backgroundColor: "#fff", marginBottom: 14, borderWidth: 1, borderColor: "#EFEFEF" },
+  card: { borderRadius: 16, overflow: "hidden", backgroundColor: "#7e5f5fff", marginBottom: 14, borderWidth: 1, borderColor: "#3e2929ff" },
   image: { width: "100%", height: 160 },
   textBlock: { padding: 14 },
 });
