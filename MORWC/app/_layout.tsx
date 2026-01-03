@@ -1,5 +1,8 @@
-import { useLanguage } from "@/context";
+import { LanguageProvider, useLanguage } from "@/context";
+import { Stack } from "expo-router";
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import LanguageModal from "./modal";
 
 function AppHeader() {
   const { lang, openLanguageModal } = useLanguage();
@@ -20,6 +23,14 @@ function AppHeader() {
   );
 }
 
+export default function RootLayout() {
+return (
+<LanguageProvider>
+<Stack screenOptions={{ header: () => <AppHeader /> }} />
+<LanguageModal />
+</LanguageProvider>
+);
+}
 
 
 const styles = StyleSheet.create({
