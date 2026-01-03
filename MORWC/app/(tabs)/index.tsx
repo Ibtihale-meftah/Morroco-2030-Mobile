@@ -1,11 +1,19 @@
+import TranslatedText from "@/components/TranslatedText";
 import { router } from "expo-router";
-import { ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Animated, { FadeInUp, SlideInRight } from "react-native-reanimated";
 import wcImage from "../../assets/images/wc.png";
+
 export default function HomeTab() {
   return (
     <ScrollView style={styles.page} contentContainerStyle={{ paddingBottom: 20 }}>
-     <ImageBackground source={wcImage} style={styles.hero}>
+      <ImageBackground source={wcImage} style={styles.hero}>
         <View style={styles.overlay} />
 
         <Animated.Text entering={FadeInUp.duration(700)} style={styles.heroTitle}>
@@ -14,42 +22,60 @@ export default function HomeTab() {
       </ImageBackground>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>NOS SERVICES</Text>
+        <TranslatedText style={styles.sectionTitle}>
+          NOS SERVICES
+        </TranslatedText>
 
         <View style={styles.grid}>
           <Animated.View entering={SlideInRight.duration(450)}>
-            <TouchableOpacity style={styles.serviceCard} onPress={() => router.push("/cities")}>
-              <Text style={styles.icon}>🏙️</Text>
-              <Text style={styles.cardText}>Villes</Text>
+            <TouchableOpacity
+              style={styles.serviceCard}
+              onPress={() => router.push("/cities")}
+            >
+              <Animated.Text style={styles.icon}>🏙️</Animated.Text>
+              <TranslatedText style={styles.cardText}>
+                Villes
+              </TranslatedText>
             </TouchableOpacity>
           </Animated.View>
 
           <Animated.View entering={SlideInRight.delay(120).duration(450)}>
-            <TouchableOpacity style={styles.serviceCard} onPress={() => router.push("/monuments")}>
-              <Text style={styles.icon}>🏛️</Text>
-              <Text style={styles.cardText}>Monuments</Text>
+            <TouchableOpacity
+              style={styles.serviceCard}
+              onPress={() => router.push("/monuments")}
+            >
+              <Animated.Text style={styles.icon}>🏛️</Animated.Text>
+              <TranslatedText style={styles.cardText}>
+                Monuments
+              </TranslatedText>
             </TouchableOpacity>
           </Animated.View>
         </View>
 
         <View style={styles.bigCards}>
           <Animated.View entering={FadeInUp.delay(150).duration(500)}>
-            <TouchableOpacity style={styles.bigCard} onPress={() => {}}>
-              <Text style={styles.bigCardIcon}>🔐</Text>
-              <TouchableOpacity onPress={() => router.push("/login")}>
-  <Text>Se connecter</Text>
-</TouchableOpacity>
-              <Text style={styles.bigCardArrow}>↗</Text>
+            <TouchableOpacity
+              style={styles.bigCard}
+              onPress={() => router.push("/login")}
+            >
+              <Animated.Text style={styles.bigCardIcon}>🔐</Animated.Text>
+              <TranslatedText style={styles.bigCardText}>
+                Se connecter
+              </TranslatedText>
+              <Animated.Text style={styles.bigCardArrow}>↗</Animated.Text>
             </TouchableOpacity>
           </Animated.View>
 
           <Animated.View entering={FadeInUp.delay(250).duration(500)}>
-            <TouchableOpacity style={styles.bigCard} onPress={() => {}}>
-              <Text style={styles.bigCardIcon}>📖</Text>
-            <TouchableOpacity onPress={() => router.push("/register")}>
-  <Text>Créer un compte</Text>
-</TouchableOpacity>
-              <Text style={styles.bigCardArrow}>↗</Text>
+            <TouchableOpacity
+              style={styles.bigCard}
+              onPress={() => router.push("/register")}
+            >
+              <Animated.Text style={styles.bigCardIcon}>📖</Animated.Text>
+              <TranslatedText style={styles.bigCardText}>
+                Créer un compte
+              </TranslatedText>
+              <Animated.Text style={styles.bigCardArrow}>↗</Animated.Text>
             </TouchableOpacity>
           </Animated.View>
         </View>
@@ -57,6 +83,7 @@ export default function HomeTab() {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   page: { flex: 1, backgroundColor: "#fff" },
@@ -126,7 +153,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bigCardArrow: {
-    color: "#7CFF9A",
+    color: "#1c4926ff",
     fontSize: 22,
     fontWeight: "800",
   },

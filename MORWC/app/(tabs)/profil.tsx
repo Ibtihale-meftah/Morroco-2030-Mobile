@@ -1,3 +1,4 @@
+import TranslatedText from "@/components/TranslatedText";
 import { useLanguage } from "@/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
@@ -5,7 +6,6 @@ import { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -40,45 +40,77 @@ export default function ProfilScreen() {
   };
 
   const items = [
-    { label: "Modifier mon profil", onPress: () => router.push("../edit-profile") },
-    { label: "Modifier mon mot de passe", onPress: () => router.push("../reset-password") },
-    { label: "Sélectionner la langue", onPress: openLanguageModal },
-    { label: "Supprimer mon compte", onPress: () => router.push("../delete-account") },
+    {
+      label: "Modifier mon profil",
+      onPress: () => router.push("../edit-profile"),
+    },
+    {
+      label: "Modifier mon mot de passe",
+      onPress: () => router.push("../reset-password"),
+    },
+    {
+      label: "Sélectionner la langue",
+      onPress: openLanguageModal,
+    },
+    {
+      label: "Supprimer mon compte",
+      onPress: () => router.push("../delete-account"),
+    },
   ];
 
   return (
     <View style={styles.container}>
-      <Animated.View entering={FadeInDown.duration(500)} style={styles.avatarWrap}>
+      <Animated.View
+        entering={FadeInDown.duration(500)}
+        style={styles.avatarWrap}
+      >
         <TouchableOpacity onPress={selectAvatar}>
           <View style={styles.avatar}>
             {avatarIndex !== null ? (
               <Image source={avatars[avatarIndex]} style={styles.avatarImg} />
             ) : (
-              <Text style={styles.avatarText}>👤</Text>
+              <TranslatedText style={styles.avatarText}>👤</TranslatedText>
             )}
           </View>
         </TouchableOpacity>
 
-        <Text style={styles.name}>{user?.email}</Text>
-        <Text style={styles.sub}>Appuie sur l’avatar pour changer</Text>
+        <TranslatedText style={styles.name}>
+          {user?.email ?? ""}
+        </TranslatedText>
+
+        <TranslatedText style={styles.sub}>
+          Appuie sur l’avatar pour changer
+        </TranslatedText>
       </Animated.View>
 
       <View style={styles.list}>
         {items.map((it) => (
-          <TouchableOpacity key={it.label} style={styles.item} onPress={it.onPress}>
-            <Text style={styles.itemText}>{it.label}</Text>
-            <Text style={styles.chevron}>›</Text>
+          <TouchableOpacity
+            key={it.label}
+            style={styles.item}
+            onPress={it.onPress}
+          >
+            <TranslatedText style={styles.itemText}>
+              {it.label}
+            </TranslatedText>
+            <TranslatedText style={styles.chevron}>›</TranslatedText>
           </TouchableOpacity>
         ))}
       </View>
 
-      <TouchableOpacity style={styles.logout} onPress={() => router.push("/logout")}>
-        <Text style={styles.logoutText}>Déconnexion</Text>
-        <Text style={styles.chevronWhite}>›</Text>
+      <TouchableOpacity
+        style={styles.logout}
+        onPress={() => router.push("/logout")}
+      >
+        <TranslatedText style={styles.logoutText}>
+          Déconnexion
+        </TranslatedText>
+        <TranslatedText style={styles.chevronWhite}>›</TranslatedText>
       </TouchableOpacity>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#fff" },

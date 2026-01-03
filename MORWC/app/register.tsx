@@ -1,64 +1,130 @@
-import { router } from "expo-router";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { auth } from "../src/firebase/firebase";
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
+import { router } from 'expo-router';
+import { useState } from 'react';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 
-export default function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+export default function RegisterScreen() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleRegister = async () => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      // Pas de router.replace ici
-      // _layout.tsx gère la redirection automatiquement
-    } catch (e: any) {
-      setError("Impossible de créer le compte. Vérifie l’email et le mot de passe.");
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const validatePassword = (password: string) => {
+    return password.length >= 6; // Simple check
+  };
+
+  const handleRegister = () => {
+    setError('');
+    if (!name || !email || !password || !confirmPassword) {
+      setError('Veuillez remplir tous les champs.');
+      return;
     }
+    if (!validateEmail(email)) {
+      setError('Email invalide.');
+      return;
+    }
+    if (!validatePassword(password)) {
+      setError('Le mot de passe doit contenir au moins 6 caractères.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Les mots de passe ne correspondent pas.');
+      return;
+    }
+    // TODO: Implement register with Firebase
+    console.log('Register:', name, email, password);
+    Alert.alert('Succès', 'Compte créé avec succès!', [
+      { text: 'OK', onPress: () => router.push('/login') }
+    ]);
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Créer un compte</Text>
+    <ThemedView style={styles.container}>
+      <ThemedText type="title" style={styles.title}>Créer un compte</ThemedText>
+
+      {error ? <Text style={styles.error}>{error}</Text> : null}
 
       <TextInput
+        style={styles.input}
+        placeholder="Nom"
+        value={name}
+        onChangeText={setName}
+      />
+
+      <TextInput
+        style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
+        keyboardType="email-address"
         autoCapitalize="none"
       />
 
       <TextInput
+        style={styles.input}
         placeholder="Mot de passe"
         value={password}
         onChangeText={setPassword}
-        style={styles.input}
         secureTextEntry
       />
 
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      <TextInput
+        style={styles.input}
+        placeholder="Confirmation mot de passe"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureTextEntry
+      />
 
-      <TouchableOpacity style={styles.btn} onPress={handleRegister}>
-        <Text style={styles.btnText}>S’inscrire</Text>
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>Créer le compte</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => router.push("/login")}>
-        <Text style={styles.link}>Déjà un compte ? Se connecter</Text>
-      </TouchableOpacity>
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 24 },
-  title: { fontSize: 22, marginBottom: 20, textAlign: "center" },
-  input: { borderWidth: 1, borderRadius: 8, padding: 12, marginBottom: 12 },
-  btn: { backgroundColor: "#d32f2f", padding: 14, borderRadius: 8 },
-  btnText: { color: "#fff", textAlign: "center" },
-  link: { marginTop: 16, textAlign: "center" },
-  error: { color: "red", marginBottom: 10 }
+  container: {
+    flex: 1,
+    padding: 16,
+    justifyContent: 'center',
+    backgroundColor: '#fff', // Changed background color to white
+  },
+  title: {
+    marginBottom: 24,
+    textAlign: 'center',
+    color: '#000', // Changed text color to black
+  },
+  error: {
+    color: 'red',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
+    fontSize: 16,
+    color: '#000', // Changed text color to black
+  },
+  button: {
+    backgroundColor: '#7A1F16',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
-

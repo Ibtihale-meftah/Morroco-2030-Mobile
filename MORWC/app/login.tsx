@@ -1,65 +1,109 @@
-import { router } from "expo-router";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { auth } from "../src/firebase/firebase";
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
+import { useState } from 'react';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+export default function LoginScreen() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogin = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Pas de router.replace ici
-      // _layout.tsx gère la redirection automatiquement
-    } catch (e: any) {
-      setError("Email ou mot de passe incorrect");
+  const handleLogin = () => {
+    setError('');
+    if (!email || !password) {
+      setError('Veuillez remplir tous les champs.');
+      return;
+    }
+    // TODO: Implement login with Firebase
+    console.log('Login:', email, password);
+    // Simulate error
+    if (email !== 'test@example.com') {
+      setError('Email ou mot de passe incorrect.');
+    } else {
+      Alert.alert('Succès', 'Connexion réussie!');
     }
   };
 
+  const handleForgotPassword = () => {
+    // TODO: Implement forgot password
+    Alert.alert('Mot de passe oublié', 'Fonctionnalité à venir.');
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Connexion</Text>
+    <ThemedView style={styles.container}>
+      <ThemedText type="title" style={styles.title}>Se connecter</ThemedText>
+
+      {error ? <Text style={styles.error}>{error}</Text> : null}
 
       <TextInput
-        placeholder="Email"
+        style={styles.input}
+        placeholder="Email ou nom d’utilisateur"
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
+        keyboardType="email-address"
         autoCapitalize="none"
       />
 
       <TextInput
+        style={styles.input}
         placeholder="Mot de passe"
         value={password}
         onChangeText={setPassword}
-        style={styles.input}
         secureTextEntry
       />
 
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-
-      <TouchableOpacity style={styles.btn} onPress={handleLogin}>
-        <Text style={styles.btnText}>Se connecter</Text>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push("/register")}>
-        <Text style={styles.link}>Créer un compte</Text>
+      <TouchableOpacity onPress={handleForgotPassword}>
+        <Text style={styles.forgot}>Mot de passe oublié ?</Text>
       </TouchableOpacity>
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 24 },
-  title: { fontSize: 22, marginBottom: 20, textAlign: "center" },
-  input: { borderWidth: 1, borderRadius: 8, padding: 12, marginBottom: 12 },
-  btn: { backgroundColor: "#d32f2f", padding: 14, borderRadius: 8 },
-  btnText: { color: "#fff", textAlign: "center" },
-  link: { marginTop: 16, textAlign: "center" },
-  error: { color: "red", marginBottom: 10 }
+  container: {
+    flex: 1,
+    padding: 16,
+    justifyContent: 'center',
+    backgroundColor: '#fff', // Changed background color to white
+  },
+  title: {
+    marginBottom: 24,
+    textAlign: 'center',
+    color: '#000', // Changed text color to black
+  },
+  error: {
+    color: 'red',
+    textAlign: 'center',
+    marginBottom: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
+    fontSize: 16,
+    color: '#000', // Changed text color to black
+  },
+  button: {
+    backgroundColor: '#7A1F16',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  forgot: {
+    color: '#7A1F16',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
 });
-
-
