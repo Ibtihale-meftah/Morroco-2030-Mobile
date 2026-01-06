@@ -1,8 +1,9 @@
 import { LanguageProvider, useLanguage } from "@/context";
 import { Stack } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import LanguageModal from "./modal";
+
 
 function AppHeader() {
   const { lang, openLanguageModal } = useLanguage();
@@ -10,15 +11,6 @@ function AppHeader() {
   return (
     <View style={styles.header}>
       <Text style={styles.logo}>MOROCCOGo 2030</Text>
-
-      <View style={styles.right}>
-        <TouchableOpacity onPress={openLanguageModal} style={styles.langBtn}>
-          <Text style={styles.langText}>
-            {lang === "FR" ? "Français" : lang === "EN" ? "English" : "العربية"}
-          </Text>
-          <Text style={styles.langArrow}>▾</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -27,8 +19,17 @@ export default function RootLayout() {
 return (
 <LanguageProvider>
 <Stack screenOptions={{ header: () => <AppHeader /> }} />
-<LanguageModal />
-</LanguageProvider>
+
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="fan-id" />
+        <Stack.Screen name="evisa" />
+        <Stack.Screen name="evisa/request" />
+        <Stack screenOptions={{ headerShown: false }} />
+      </Stack>
+
+      <LanguageModal />
+    </LanguageProvider>
 );
 }
 

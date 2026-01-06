@@ -43,17 +43,6 @@ export default function ServicesScreen() {
           </TouchableOpacity>
         </Animated.View>
 
-        <Animated.View entering={FadeInUp.delay(240).duration(450)}>
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => router.push("/map")}
-          >
-            <Animated.Text style={styles.icon}>📍</Animated.Text>
-            <TranslatedText style={styles.label}>
-              Carte
-            </TranslatedText>
-          </TouchableOpacity>
-        </Animated.View>
       </View>
     </ScrollView>
   );
