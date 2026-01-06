@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import {
   ScrollView,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -12,7 +13,7 @@ export default function ServicesScreen() {
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: 20 }}
+      contentContainerStyle={{ paddingBottom: 30 }}
     >
       <TranslatedText style={styles.title}>
         NOS SERVICES
@@ -24,7 +25,7 @@ export default function ServicesScreen() {
             style={styles.card}
             onPress={() => router.push("/cities")}
           >
-            <Animated.Text style={styles.icon}>🏙️</Animated.Text>
+            <Text style={styles.icon}>🏙️</Text>
             <TranslatedText style={styles.label}>
               Villes
             </TranslatedText>
@@ -36,17 +37,54 @@ export default function ServicesScreen() {
             style={styles.card}
             onPress={() => router.push("/monuments")}
           >
-            <Animated.Text style={styles.icon}>🏛️</Animated.Text>
+            <Text style={styles.icon}>🏛️</Text>
             <TranslatedText style={styles.label}>
               Monuments
             </TranslatedText>
           </TouchableOpacity>
         </Animated.View>
 
+        <Animated.View entering={FadeInUp.delay(160).duration(450)}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => router.push("/itinerary")}
+          >
+            <Text style={styles.icon}>🗺️</Text>
+            <TranslatedText style={styles.label}>
+              Itinéraires
+            </TranslatedText>
+          </TouchableOpacity>
+        </Animated.View>
+
+        <Animated.View entering={FadeInUp.delay(240).duration(450)}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => router.push("/fan-id")}
+          >
+            <Text style={styles.icon}>🎫</Text>
+            <TranslatedText style={styles.label}>
+              Fan ID
+            </TranslatedText>
+          </TouchableOpacity>
+        </Animated.View>
+
+        <Animated.View entering={FadeInUp.delay(320).duration(450)}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => router.push("/evisa")}
+          >
+            <Text style={styles.icon}>🧾</Text>
+            <TranslatedText style={styles.label}>
+              eVisa / AEVM
+            </TranslatedText>
+          </TouchableOpacity>
+        </Animated.View>
       </View>
     </ScrollView>
   );
 }
+
+
 
 
 const styles = StyleSheet.create({

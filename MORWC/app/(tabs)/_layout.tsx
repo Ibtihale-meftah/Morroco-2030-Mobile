@@ -19,6 +19,7 @@ export default function TabsLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="services"
         options={{
@@ -28,6 +29,7 @@ export default function TabsLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="monuments"
         options={{
@@ -37,15 +39,27 @@ export default function TabsLayout() {
           ),
         }}
       />
+
       <Tabs.Screen
-        name="FanID"
+        name="fan-id"
         options={{
-          title: "FanId",
+          title: "Fan ID",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="id-card" color={color} size={size} />
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="evisa"
+        options={{
+          title: "eVisa",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="document-text" color={color} size={size} />
+          ),
+        }}
+      />
+
       <Tabs.Screen
         name="profil"
         options={{

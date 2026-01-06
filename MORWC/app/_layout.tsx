@@ -1,13 +1,10 @@
-import { LanguageProvider, useLanguage } from "@/context";
+import { LanguageProvider } from "@/context";
 import { Stack } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import LanguageModal from "./modal";
 
-
 function AppHeader() {
-  const { lang, openLanguageModal } = useLanguage();
-
   return (
     <View style={styles.header}>
       <Text style={styles.logo}>MOROCCOGo 2030</Text>
@@ -16,22 +13,24 @@ function AppHeader() {
 }
 
 export default function RootLayout() {
-return (
-<LanguageProvider>
-<Stack screenOptions={{ header: () => <AppHeader /> }} />
-
-      <Stack screenOptions={{ headerShown: false }}>
+  return (
+    <LanguageProvider>
+      <Stack
+        screenOptions={{
+          header: () => <AppHeader />,
+        }}
+      >
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="fan-id" />
-        <Stack.Screen name="evisa" />
+        <Stack.Screen name="evisa/index" />
         <Stack.Screen name="evisa/request" />
-        <Stack screenOptions={{ headerShown: false }} />
       </Stack>
 
       <LanguageModal />
     </LanguageProvider>
-);
+  );
 }
+
 
 
 const styles = StyleSheet.create({
