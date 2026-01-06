@@ -24,7 +24,7 @@ export default function EVisaScreen() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push("./evisa/request")}
+          onPress={() => router.push("../evisa/request")}
         >
           <Text style={styles.buttonText}>Faire une demande</Text>
         </TouchableOpacity>
