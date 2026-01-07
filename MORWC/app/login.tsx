@@ -1,26 +1,50 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { router } from 'expo-router';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { auth } from '../src/firebase/firebase';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setError('');
     if (!email || !password) {
       setError('Veuillez remplir tous les champs.');
       return;
     }
-    // TODO: Implement login with Firebase
-    console.log('Login:', email, password);
-    // Simulate error
-    if (email !== 'test@example.com') {
-      setError('Email ou mot de passe incorrect.');
-    } else {
-      Alert.alert('Succès', 'Connexion réussie!');
+
+    setLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      Alert.alert('Succès', 'La connexion est établie avec succès.', [
+        {
+          text: 'OK',
+          onPress: () => {
+            router.replace('/(tabs)');
+          },
+        },
+      ]);
+    } catch (err: any) {
+      console.log(err.code, err.message);
+      if (err.code === 'auth/invalid-email') {
+        setError('Email invalide.');
+      } else if (err.code === 'auth/user-disabled') {
+        setError('Ce compte a été désactivé.');
+      } else if (err.code === 'auth/user-not-found') {
+        setError('Aucun compte trouvé avec cet email.');
+      } else if (err.code === 'auth/wrong-password') {
+        setError('Mot de passe incorrect.');
+      } else {
+        setError('Email ou mot de passe incorrect.');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,8 +76,12 @@ export default function LoginScreen() {
         secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Se connecter</Text>
+      <TouchableOpacity 
+        style={[styles.button, loading && styles.buttonDisabled]} 
+        onPress={handleLogin}
+        disabled={loading}
+      >
+        <Text style={styles.buttonText}>{loading ? 'Connexion...' : 'Se connecter'}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleForgotPassword}>
@@ -95,6 +123,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 12,
+  },
+  buttonDisabled: {
+    opacity: 0.6,
   },
   buttonText: {
     color: '#fff',

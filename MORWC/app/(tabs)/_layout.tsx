@@ -1,9 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import { User } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { auth } from "../../src/firebase/firebase";
 
 export default function TabsLayout() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(setUser);
+    return unsubscribe;
+  }, []);
+
   return (
-    <Tabs
+     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: "#7A1F16",
@@ -29,24 +39,14 @@ export default function TabsLayout() {
           ),
         }}
       />
-
-      <Tabs.Screen
-        name="monuments"
-        options={{
-          title: "Monuments",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="business" color={color} size={size} />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
+      
+       <Tabs.Screen
         name="fan-id"
         options={{
           title: "Fan ID",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="id-card" color={color} size={size} />
-          ),
+          ), href: user ? undefined : null,
         }}
       />
 
@@ -56,7 +56,17 @@ export default function TabsLayout() {
           title: "eVisa",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="document-text" color={color} size={size} />
-          ),
+          ), href: user ? undefined : null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="itineraire"
+        options={{
+          title: "Itinéraire",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="map" color={color} size={size} />
+          ), href: user ? undefined : null,
         }}
       />
 
@@ -67,6 +77,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" color={color} size={size} />
           ),
+          href: user ? undefined : null,
         }}
       />
     </Tabs>

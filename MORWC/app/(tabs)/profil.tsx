@@ -1,7 +1,9 @@
 import TranslatedText from "@/components/TranslatedText";
 import { useLanguage } from "@/context";
+import { getCurrentUserRole } from "@/src/firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import {
   Image,
@@ -21,9 +23,24 @@ const avatars = [
 
 export default function ProfilScreen() {
   const { openLanguageModal } = useLanguage();
-  const user = auth.currentUser;
-
+  const [user, setUser] = useState<User | null>(auth.currentUser);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [avatarIndex, setAvatarIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(setUser);
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const role = await getCurrentUserRole();
+      setIsAdmin(role === "admin");
+    };
+    if (user) {
+      checkAdmin();
+    }
+  }, [user]);
 
   useEffect(() => {
     const loadAvatar = async () => {
@@ -32,6 +49,12 @@ export default function ProfilScreen() {
     };
     loadAvatar();
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/login");
+    }
+  }, [user]);
 
   const selectAvatar = async () => {
     const next = avatarIndex === null ? 0 : (avatarIndex + 1) % avatars.length;
@@ -56,6 +79,14 @@ export default function ProfilScreen() {
       label: "Supprimer mon compte",
       onPress: () => router.push("../delete-account"),
     },
+    ...(isAdmin
+      ? [
+          {
+            label: "Administration",
+            onPress: () => router.push("../admin"),
+          },
+        ]
+      : []),
   ];
 
   return (

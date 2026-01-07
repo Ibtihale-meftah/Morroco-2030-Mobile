@@ -19,10 +19,10 @@ export default function ServicesScreen() {
         NOS SERVICES
       </TranslatedText>
 
-      <View style={styles.grid}>
+      <View style={styles.servicesGrid}>
         <Animated.View entering={FadeInUp.duration(450)}>
           <TouchableOpacity
-            style={styles.card}
+            style={styles.serviceCard}
             onPress={() => router.push("/cities")}
           >
             <Text style={styles.icon}>🏙️</Text>
@@ -34,7 +34,7 @@ export default function ServicesScreen() {
 
         <Animated.View entering={FadeInUp.delay(80).duration(450)}>
           <TouchableOpacity
-            style={styles.card}
+            style={styles.serviceCard}
             onPress={() => router.push("/monuments")}
           >
             <Text style={styles.icon}>🏛️</Text>
@@ -46,7 +46,7 @@ export default function ServicesScreen() {
 
         <Animated.View entering={FadeInUp.delay(160).duration(450)}>
           <TouchableOpacity
-            style={styles.card}
+            style={styles.serviceCard}
             onPress={() => router.push("/itinerary")}
           >
             <Text style={styles.icon}>🗺️</Text>
@@ -58,7 +58,7 @@ export default function ServicesScreen() {
 
         <Animated.View entering={FadeInUp.delay(240).duration(450)}>
           <TouchableOpacity
-            style={styles.card}
+            style={styles.serviceCard}
             onPress={() => router.push("/fan-id")}
           >
             <Text style={styles.icon}>🎫</Text>
@@ -70,7 +70,7 @@ export default function ServicesScreen() {
 
         <Animated.View entering={FadeInUp.delay(320).duration(450)}>
           <TouchableOpacity
-            style={styles.card}
+            style={styles.serviceCard}
             onPress={() => router.push("/evisa")}
           >
             <Text style={styles.icon}>🧾</Text>
@@ -88,16 +88,56 @@ export default function ServicesScreen() {
 
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 16 },
-  title: { fontSize: 18, fontWeight: "800", color: "#7A1F16", marginBottom: 14 },
-  grid: { flexDirection: "row", flexWrap: "wrap", gap: 14 },
-  card: {
-    width: "47%",
-    backgroundColor: "#7A1F16",
-    borderRadius: 16,
-    paddingVertical: 22,
-    alignItems: "center",
+  container: {
+    flexGrow: 1,
+    padding: 20,
+    paddingBottom: 110,
+    backgroundColor: "#F5F5DC",
   },
-  icon: { fontSize: 28, color: "#fff" },
-  label: { marginTop: 8, color: "#fff", fontWeight: "800" },
+
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#7A1F16",
+    marginBottom: 12,
+    textAlign: "center",
+  },
+
+  servicesGrid: {
+  flexDirection: "row",
+  flexWrap: "wrap",
+  justifyContent: "space-between",
+},
+
+serviceCard: {
+  width: "48%",          // 2 cartes par ligne
+  backgroundColor: "#7A1F16",
+  borderRadius: 18,
+  paddingVertical: 24,
+  paddingHorizontal: 12,
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: 140,
+  marginBottom: 16,      // espace vertical entre lignes
+},
+
+ icon: {
+  fontSize: 40,
+  marginBottom: 10,
+},
+
+label: {
+  color: "#fff",
+  fontSize: 16,
+  fontWeight: "600",
+  textAlign: "center",
+},
+
+  cardText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+
 });

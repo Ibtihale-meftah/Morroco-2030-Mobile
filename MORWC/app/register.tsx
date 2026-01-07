@@ -1,70 +1,71 @@
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { router } from 'expo-router';
-import { useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { router } from "expo-router";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { auth, db } from "../src/firebase/firebase";
 
 export default function RegisterScreen() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const validateEmail = (email: string) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
+  const handleRegister = async () => {
+    setError("");
 
-  const validatePassword = (password: string) => {
-    return password.length >= 6; // Simple check
-  };
+    if (!email || !password) {
+      setError("Veuillez remplir tous les champs.");
+      return;
+    }
 
-  const handleRegister = () => {
-    setError('');
-    if (!name || !email || !password || !confirmPassword) {
-      setError('Veuillez remplir tous les champs.');
-      return;
+    try {
+      const cred = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await setDoc(doc(db, "users", cred.user.uid), {
+        email: cred.user.email,
+        role: "user",
+        createdAt: new Date(),
+      });
+
+      router.replace("/login");
+    } catch (err: any) {
+      console.log(err.code, err.message);
+
+      if (err.code === "auth/email-already-in-use") {
+        setError("Email déjà utilisé.");
+      } else if (err.code === "auth/invalid-email") {
+        setError("Email invalide.");
+      } else if (err.code === "auth/weak-password") {
+        setError("Mot de passe trop faible.");
+      } else {
+        setError("Erreur lors de l’inscription.");
+      }
     }
-    if (!validateEmail(email)) {
-      setError('Email invalide.');
-      return;
-    }
-    if (!validatePassword(password)) {
-      setError('Le mot de passe doit contenir au moins 6 caractères.');
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError('Les mots de passe ne correspondent pas.');
-      return;
-    }
-    // TODO: Implement register with Firebase
-    console.log('Register:', name, email, password);
-    Alert.alert('Succès', 'Compte créé avec succès!', [
-      { text: 'OK', onPress: () => router.push('/login') }
-    ]);
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText type="title" style={styles.title}>Créer un compte</ThemedText>
+    <View style={styles.container}>
+      <Text style={styles.title}>Créer un compte</Text>
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
-
-      <TextInput
-        style={styles.input}
-        placeholder="Nom"
-        value={name}
-        onChangeText={setName}
-      />
 
       <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        keyboardType="email-address"
         autoCapitalize="none"
+        keyboardType="email-address"
       />
 
       <TextInput
@@ -75,56 +76,59 @@ export default function RegisterScreen() {
         secureTextEntry
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Confirmation mot de passe"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Créer le compte</Text>
+        <Text style={styles.buttonText}>S’inscrire</Text>
       </TouchableOpacity>
-    </ThemedView>
+
+      <TouchableOpacity onPress={() => router.replace("/login")}>
+        <Text style={styles.link}>Déjà un compte ? Se connecter</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    justifyContent: 'center',
-    backgroundColor: '#fff', // Changed background color to white
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#fff",
   },
   title: {
-    marginBottom: 24,
-    textAlign: 'center',
-    color: '#000', // Changed text color to black
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#7A1F16",
   },
   error: {
-    color: 'red',
-    textAlign: 'center',
-    marginBottom: 16,
+    color: "red",
+    textAlign: "center",
+    marginBottom: 12,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 8,
     padding: 12,
-    marginBottom: 16,
+    marginBottom: 14,
     fontSize: 16,
-    color: '#000', // Changed text color to black
   },
   button: {
-    backgroundColor: '#7A1F16',
-    padding: 12,
+    backgroundColor: "#7A1F16",
+    padding: 14,
     borderRadius: 8,
-    alignItems: 'center',
+    alignItems: "center",
+    marginBottom: 14,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
+    fontWeight: "bold",
     fontSize: 16,
-    fontWeight: 'bold',
+  },
+  link: {
+    textAlign: "center",
+    color: "#7A1F16",
+    textDecorationLine: "underline",
   },
 });
