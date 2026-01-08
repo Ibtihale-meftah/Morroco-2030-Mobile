@@ -31,25 +31,7 @@ Fournir une application mobile simple et intuitive permettant aux touristes et a
 
 ## Structure du projet
 
-MOROCCO-2030-MOBILE
-│
-├── app
-│ ├── itinerary
-│ ├── monuments
-│ ├── map
-│ ├── index.tsx
-│ ├── _layout.tsx
-│
-├── src
-│ ├── components
-│ ├── context
-│
-├── assets
-├── constants
-├── data
-├── hooks
-├── package.json
-└── README.md
+<img width="336" height="951" alt="image" src="https://github.com/user-attachments/assets/1a50acef-195f-403d-9db8-2568255e8822" />
 
 
 ## Installation et exécution
@@ -90,16 +72,6 @@ Scanner le QR code avec l’application Expo Go ou lancer sur un émulateur.
 - Carte interactive
 - Fan ID
 - eVisa / AEVM
-
-## État du projet
-
-Projet en cours de développement.  
-Des améliorations sont prévues, notamment :
-
-- Ajout du multilingue
-- Amélioration de l’UX/UI
-- Intégration de données dynamiques
-- Gestion hors ligne partielle
 
 ## Auteur
 
