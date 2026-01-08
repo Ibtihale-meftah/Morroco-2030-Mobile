@@ -1,5 +1,7 @@
 import TranslatedText from "@/components/TranslatedText";
+import { getCurrentUserRole } from "@/src/firebase/user";
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -10,6 +12,11 @@ import {
 import Animated, { FadeInUp } from "react-native-reanimated";
 
 export default function ServicesScreen() {
+  const [role, setRole] = useState<"admin" | "user" | null>(null);
+
+  useEffect(() => {
+    getCurrentUserRole().then(setRole);
+  }, []);
   return (
     <ScrollView
       style={styles.container}
@@ -79,6 +86,20 @@ export default function ServicesScreen() {
             </TranslatedText>
           </TouchableOpacity>
         </Animated.View>
+
+        {role === "admin" && (
+          <Animated.View entering={FadeInUp.delay(400).duration(450)}>
+            <TouchableOpacity
+              style={styles.serviceCard}
+              onPress={() => router.push("/admin")}
+            >
+              <Text style={styles.icon}>🛠️</Text>
+              <TranslatedText style={styles.label}>
+                Administration
+              </TranslatedText>
+            </TouchableOpacity>
+          </Animated.View>
+        )}
       </View>
     </ScrollView>
   );
@@ -104,34 +125,25 @@ const styles = StyleSheet.create({
   },
 
   servicesGrid: {
-  flexDirection: "row",
-  flexWrap: "wrap",
-  justifyContent: "space-between",
-},
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 16,
+  },
 
-serviceCard: {
-  width: "48%",          // 2 cartes par ligne
-  backgroundColor: "#7A1F16",
-  borderRadius: 18,
-  paddingVertical: 24,
-  paddingHorizontal: 12,
-  alignItems: "center",
-  justifyContent: "center",
-  minHeight: 140,
-  marginBottom: 16,      // espace vertical entre lignes
-},
+  serviceCard: {
+    flexBasis: "48%",
+    backgroundColor: "#7A1F16",
+    borderRadius: 16,
+    padding: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 140,
+  },
 
- icon: {
-  fontSize: 40,
-  marginBottom: 10,
-},
-
-label: {
-  color: "#fff",
-  fontSize: 16,
-  fontWeight: "600",
-  textAlign: "center",
-},
+  icon: {
+    fontSize: 40,
+    marginBottom: 12,
+  },
 
   cardText: {
     color: "#fff",
@@ -140,4 +152,10 @@ label: {
     textAlign: "center",
   },
 
+  label: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center",
+  },
 });

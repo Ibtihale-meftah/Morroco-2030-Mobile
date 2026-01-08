@@ -1,6 +1,6 @@
 import TranslatedText from "@/components/TranslatedText";
 import { useLanguage } from "@/context";
-import { getCurrentUserRole } from "@/src/firebase/firestore";
+import { getCurrentUserRole } from "@/src/firebase/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { User } from "firebase/auth";
@@ -24,7 +24,7 @@ const avatars = [
 export default function ProfilScreen() {
   const { openLanguageModal } = useLanguage();
   const [user, setUser] = useState<User | null>(auth.currentUser);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [role, setRole] = useState<"admin" | "user" | null>(null);
   const [avatarIndex, setAvatarIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -33,13 +33,7 @@ export default function ProfilScreen() {
   }, []);
 
   useEffect(() => {
-    const checkAdmin = async () => {
-      const role = await getCurrentUserRole();
-      setIsAdmin(role === "admin");
-    };
-    if (user) {
-      checkAdmin();
-    }
+    getCurrentUserRole().then(setRole);
   }, [user]);
 
   useEffect(() => {
@@ -79,11 +73,11 @@ export default function ProfilScreen() {
       label: "Supprimer mon compte",
       onPress: () => router.push("../delete-account"),
     },
-    ...(isAdmin
+    ...(role === "admin"
       ? [
           {
-            label: "Administration",
-            onPress: () => router.push("../admin"),
+            label: "🛠️ Administration",
+            onPress: () => router.push("/admin"),
           },
         ]
       : []),

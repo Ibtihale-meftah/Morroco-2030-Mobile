@@ -32,6 +32,7 @@ export default function RegisterScreen() {
       );
 
       await setDoc(doc(db, "users", cred.user.uid), {
+        uid: cred.user.uid,
         email: cred.user.email,
         role: "user",
         createdAt: new Date(),

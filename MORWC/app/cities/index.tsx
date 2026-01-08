@@ -1,20 +1,44 @@
 import { ThemedText } from "@/components/themed-text";
 import { cities } from "@/data/cities";
+import { Image } from "expo-image";
 import { router } from "expo-router";
-import { FlatList, Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function CitiesScreen() {
   return (
     <FlatList
       data={cities}
       keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.container}
+      contentContainerStyle={{ padding: 16 }}
       renderItem={({ item }) => (
-        <TouchableOpacity style={styles.card} onPress={() => router.push(`/cities/${item.id}`)}>
-          {item.image ? <Image source={{ uri: item.image }} style={styles.image} /> : null}
-          <View style={styles.textBlock}>
-            <ThemedText type="subtitle">{item.name}</ThemedText>
-            <ThemedText>{item.description}</ThemedText>
+        <TouchableOpacity
+          style={styles.card}
+          onPress={() => router.push(`/cities/${item.id}`)}
+        >
+          {/* IMAGE */}
+         <Image
+  source={{
+    uri: item.image
+      ? item.image
+      : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg",
+  }}
+  style={styles.image}
+  resizeMode="cover"
+/>
+
+
+          {/* TEXTE */}
+          <View style={styles.content}>
+            <ThemedText
+  type="subtitle"
+  style={{ color: "#000" }}
+>
+  {item.name}
+</ThemedText>
+
+            <ThemedText style={styles.description} numberOfLines={3}>
+              {item.description}
+            </ThemedText>
           </View>
         </TouchableOpacity>
       )}
@@ -23,8 +47,31 @@ export default function CitiesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 16, paddingBottom: 24 },
-  card: { borderRadius: 16, overflow: "hidden", backgroundColor: "#7e5f5fff", marginBottom: 14, borderWidth: 1, borderColor: "#3e2929ff" },
-  image: { width: "100%", height: 160 },
-  textBlock: { padding: 14 },
+  card: {
+    backgroundColor: "#fefffcff",
+    borderRadius: 16,
+    marginBottom: 20,
+    overflow: "hidden",
+    elevation: 3,
+  },
+
+  image: {
+  width: "100%",
+  height: 180,
+  borderTopLeftRadius: 14,
+  borderTopRightRadius: 14,
+},
+
+  content: {
+    padding: 14,
+  },
+
+  title: {
+    marginBottom: 20,
+  },
+
+  description: {
+    color: "#131111ff",
+    lineHeight: 20,
+  },
 });
