@@ -1,67 +1,59 @@
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { router } from 'expo-router';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
-import { auth } from '../src/firebase/firebase';
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { router } from "expo-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { auth } from "../src/firebase/firebase";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
-    setError('');
+    setError("");
+
     if (!email || !password) {
-      setError('Veuillez remplir tous les champs.');
+      setError("Veuillez remplir tous les champs.");
       return;
     }
 
-    setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      Alert.alert('Succès', 'La connexion est établie avec succès.', [
-        {
-          text: 'OK',
-          onPress: () => {
-            router.replace('/(tabs)');
-          },
-        },
-      ]);
+
+      Alert.alert("Succès", "Connexion réussie");
+      router.replace("/(tabs)");
     } catch (err: any) {
-      console.log(err.code, err.message);
-      if (err.code === 'auth/invalid-email') {
-        setError('Email invalide.');
-      } else if (err.code === 'auth/user-disabled') {
-        setError('Ce compte a été désactivé.');
-      } else if (err.code === 'auth/user-not-found') {
-        setError('Aucun compte trouvé avec cet email.');
-      } else if (err.code === 'auth/wrong-password') {
-        setError('Mot de passe incorrect.');
+      console.log(err.code);
+
+      if (err.code === "auth/user-not-found") {
+        setError("Utilisateur introuvable.");
+      } else if (err.code === "auth/wrong-password") {
+        setError("Mot de passe incorrect.");
+      } else if (err.code === "auth/invalid-email") {
+        setError("Email invalide.");
       } else {
-        setError('Email ou mot de passe incorrect.');
+        setError("Erreur de connexion.");
       }
-    } finally {
-      setLoading(false);
     }
   };
 
   const handleForgotPassword = () => {
-    // TODO: Implement forgot password
-    Alert.alert('Mot de passe oublié', 'Fonctionnalité à venir.');
+    Alert.alert("Mot de passe oublié", "Fonctionnalité à venir.");
   };
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title" style={styles.title}>Se connecter</ThemedText>
+      <ThemedText type="title" style={styles.title}>
+        Se connecter
+      </ThemedText>
 
       {error ? <Text style={styles.error}>{error}</Text> : null}
 
       <TextInput
         style={styles.input}
-        placeholder="Email ou nom d’utilisateur"
+        placeholder="Email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -76,12 +68,8 @@ export default function LoginScreen() {
         secureTextEntry
       />
 
-      <TouchableOpacity 
-        style={[styles.button, loading && styles.buttonDisabled]} 
-        onPress={handleLogin}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>{loading ? 'Connexion...' : 'Se connecter'}</Text>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Se connecter</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleForgotPassword}>
@@ -90,6 +78,7 @@ export default function LoginScreen() {
     </ThemedView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -123,9 +112,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 12,
-  },
-  buttonDisabled: {
-    opacity: 0.6,
   },
   buttonText: {
     color: '#fff',
