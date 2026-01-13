@@ -68,28 +68,26 @@ Scanner le QR code avec l’application Expo Go ou lancer sur un émulateur.
 
 -Logo de l'application
 
-![WhatsApp Image 2026-01-13 at 1 29 10 PM](https://github.com/user-attachments/assets/2f7ca1b3-cd53-4f13-b5a1-2ec2e5dd90bb)
+<img width="336" height="951" alt="image" src="https://github.com/user-attachments/assets/2f7ca1b3-cd53-4f13-b5a1-2ec2e5dd90bb" />
 
 - Accueil des services
   
-  ![WhatsApp Image 2026-01-13 at 1 29 10 PM](https://github.com/user-attachments/assets/0bfb33f2-a546-469f-a0ad-f79b057e83d6)
+<img width="336" height="951" alt="image" src="https://github.com/user-attachments/assets/0bfb33f2-a546-469f-a0ad-f79b057e83d6" />
 
 - Villes hôtes
   
-  ![WhatsApp Image 2026-01-13 at 1 30 04 PM](https://github.com/user-attachments/assets/533d1ed4-613a-4ce7-ab6b-2413ef46ae5a)
+  <img width="336" height="951" alt="image" src="https://github.com/user-attachments/assets/533d1ed4-613a-4ce7-ab6b-2413ef46ae5a" />
   
 - Profil
   
-![WhatsApp Image 2026-01-13 at 1 29 12 PM](https://github.com/user-attachments/assets/6338d912-843a-439c-9291-71fe698529ff)
+<img width="336" height="951" alt="image" src="https://github.com/user-attachments/assets/6338d912-843a-439c-9291-71fe698529ff" />
 
 - Fan ID
   
-  ![WhatsApp Image 2026-01-13 at 1 29 11 PM](https://github.com/user-attachments/assets/e9302428-3744-40d6-b18a-1de3b296ff0f)
-
+<img width="336" height="951" alt="image" src="https://github.com/user-attachments/assets/e9302428-3744-40d6-b18a-1de3b296ff0f" />
 - Services
 
-![WhatsApp Image 2026-01-13 at 1 29 12 PM](https://github.com/user-attachments/assets/31928823-335b-4102-b546-81f4d86e2ce2)
-
+<img width="336" height="951" alt="image" src="https://github.com/user-attachments/assets/31928823-335b-4102-b546-81f4d86e2ce2" />
   
 
 ## Auteur
