@@ -76,7 +76,7 @@ Scanner le QR code avec l’application Expo Go ou lancer sur un émulateur.
 
 - Villes hôtes
   
-  <img width="336" height="951" alt="image" src="https://github.com/user-attachments/assets/533d1ed4-613a-4ce7-ab6b-2413ef46ae5a" />
+ <img width="336" height="951" alt="image" src="https://github.com/user-attachments/assets/533d1ed4-613a-4ce7-ab6b-2413ef46ae5a" />
   
 - Profil
   
